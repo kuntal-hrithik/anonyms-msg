@@ -9,6 +9,15 @@ export async function POST(req: Request) {
   try {
     const { username, email, password } = await req.json();
     const verifyCode = Math.floor(1000 + Math.random() * 9000).toString();
+    if (!email || !username || !password) {
+      return Response.json(
+        {
+          success: false,
+          message: "Username, email, and password are required.",
+        },
+        { status: 400 }
+      );
+    }
     const existingUserVerifiedByUsername = await User.findOne({
       username,
       isVerified: true,
@@ -51,8 +60,8 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         isVerified: false,
-        verificationCode: verifyCode,
-        verificationCodeExpiry: expiryDate,
+        verifyCode,
+        verifyCodeExpired: expiryDate,
         isAcceptingMessages: true,
         messages: [],
       });

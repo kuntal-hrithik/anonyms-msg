@@ -12,8 +12,10 @@
     "@react-email/components": "^0.0.25",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
+    "mongodb": "^6.9.0",
     "mongoose": "^8.7.1",
     "next": "14.2.15",
+    "next-auth": "^4.24.8",
     "react": "^18",
     "react-dom": "^18",
     "react-email": "^3.0.1",
@@ -21,13 +23,13 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.15"
+    "typescript": "^5"
   }
 }
