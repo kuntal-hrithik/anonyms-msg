@@ -17,7 +17,7 @@ export async function GET(req: Request) {
  
     //validate with zod
     const result = UsernameQuerySchema.safeParse(queryParams);
-    console.log("result-hello", result);
+ 
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
       console.log("usernameErrors-hello", usernameErrors);

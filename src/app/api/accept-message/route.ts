@@ -66,3 +66,54 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET() {
+  await dbConnect();
+  const session = await getServerSession(options);
+  const user: User = session?.user as User;
+  if (!session || !session.user) {
+    return Response.json(
+      {
+        success: false,
+        message: "Not authenticated",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
+  const userId = user.user._id;
+  console.log(userId);
+
+  try {
+    const foundUser = await UserModel.findById(userId);
+    if (!foundUser) {
+      return Response.json(
+        {
+          success: true,
+          message: "user not found",
+        },
+        { status: 404 }
+      );
+    }
+    return Response.json(
+      {
+        success: true,
+        isAcceptingMessages: foundUser.isAcceptingMessages,
+      },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.log(e);
+    console.log("failed to update user status to accept messages", e);
+    return Response.json(
+      {
+        success: false,
+        message: "failed to update user status to accept messages",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
