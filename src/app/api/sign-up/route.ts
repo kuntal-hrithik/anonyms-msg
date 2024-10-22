@@ -31,9 +31,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const existingUserVerifiedByEmail = await User.findOne({ email });
-    if (existingUserVerifiedByEmail) {
-      if (existingUserVerifiedByEmail.isVerified) {
+    const existingUserByEmail = await User.findOne({ email });
+    if (existingUserByEmail) {
+      if (existingUserByEmail.isVerified) {
         return Response.json(
           {
             sucess: false,
@@ -43,12 +43,10 @@ export async function POST(req: Request) {
         );
       } else {
         const hashedPassword = await bcrypt.hash(password, 10);
-        existingUserVerifiedByEmail.password = hashedPassword;
-        existingUserVerifiedByEmail.verifyCode = verifyCode;
-        existingUserVerifiedByEmail.verifyCodeExpired = new Date(
-          Date.now() + 3600000
-        );
-        await existingUserVerifiedByEmail.save();
+        existingUserByEmail.password = hashedPassword;
+        existingUserByEmail.verifyCode = verifyCode;
+        existingUserByEmail.verifyCodeExpired = new Date(Date.now() + 3600000);
+        await existingUserByEmail.save();
       }
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
