@@ -19,8 +19,8 @@ export async function POST(req: Request) {
 
     // Pass the prompt to the model and retrieve the output
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const output = await response.text();
+    const response = result.response;
+    const output = response.text();
 
     // Send the llm output as a server reponse object
     return NextResponse.json({ output: output });

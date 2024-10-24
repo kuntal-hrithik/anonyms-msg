@@ -14,17 +14,17 @@ export async function GET(req: Request) {
     const queryParams = {
       username: searchParams.get("username"),
     };
- 
+
     //validate with zod
     const result = UsernameQuerySchema.safeParse(queryParams);
- 
+
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors || [];
       console.log("usernameErrors-hello", usernameErrors);
       return Response.json(
         {
           success: false,
-          message: "Invalid username",
+          message: usernameErrors[0],
           errors: usernameErrors,
         },
         {

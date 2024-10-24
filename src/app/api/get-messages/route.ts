@@ -19,7 +19,7 @@ export async function GET() {
       { status: 401 }
     );
   }
-  const userId = new mongoose.Types.ObjectId(user.user._id);
+  const userId = new mongoose.Types.ObjectId(user._id);
   try {
     const user = await UserModel.aggregate([
       {

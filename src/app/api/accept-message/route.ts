@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       }
     );
   }
-  const userId = user.user._id;
+  const userId = user._id;
   const { acceptMessages } = await req.json();
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -82,7 +82,7 @@ export async function GET() {
       }
     );
   }
-  const userId = user.user._id;
+  const userId = user._id;
   console.log(userId);
 
   try {
