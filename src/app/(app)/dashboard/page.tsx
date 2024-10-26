@@ -38,7 +38,9 @@ const Dashboard = () => {
   const fetchAcceptMessage = useCallback(async () => {
     setIsSwitchLoading(true);
     try {
-      const response = await axios.get<ApiResponse>("/api/accept-messages");
+      const response = await axios.get<ApiResponse>(
+        "http://localhost:3000/api/accept-message"
+      );
       setValue("acceptMessage", response.data.isAcceptingMessages);
     } catch (e) {
       const axiosError = e as AxiosError<ApiResponse>;
@@ -57,8 +59,12 @@ const Dashboard = () => {
     setIsLoading(true);
     setIsSwitchLoading(true);
     try {
-      const response = await axios.get<ApiResponse>("/api/get-messages");
-      setMessages(response.data.mesaages || []);
+      const response = await axios.get<ApiResponse>(
+        "http://localhost:3000/api/get-messages"
+      );
+      console.log(response.data);
+
+      setMessages(response.data.messages || []);
     } catch (e) {
       const axiosError = e as AxiosError<ApiResponse>;
       toast({
@@ -80,12 +86,17 @@ const Dashboard = () => {
     fetchMessages();
     fetchAcceptMessage();
   }, [session, fetchAcceptMessage, setValue, fetchMessages]);
+  console.log({ messages });
 
   const handleSwitchChange = async () => {
     try {
-      await axios.post<ApiResponse>("/api/accept-message", {
-        acceptMessage: !acceptMessage,
-      });
+      const res = await axios.post<ApiResponse>(
+        "http://localhost:3000/api/accept-message",
+        {
+          acceptMessages: !acceptMessage,
+        }
+      );
+      console.log(res.data);
       setValue("acceptMessage", !acceptMessage);
       toast({
         title: "Accept message updated",
@@ -101,6 +112,7 @@ const Dashboard = () => {
       });
     }
   };
+  console.log({ acceptMessage });
 
   const username = session?.user.username;
 

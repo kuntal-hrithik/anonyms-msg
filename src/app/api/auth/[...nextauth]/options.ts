@@ -62,7 +62,6 @@ export const options: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
-      console.log({ user });
       if (user) {
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
@@ -73,7 +72,6 @@ export const options: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log({ token });
       if (token && typeof token._id === "string") {
         session.user._id = token._id;
         session.user.isVerified = token.isVerified as boolean;
