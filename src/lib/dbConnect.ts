@@ -4,6 +4,7 @@ type connectoionObject = {
   isConnected?: number;
 };
 
+console.log(process.env.MONGODB_URI);
 const connection: connectoionObject = {};
 
 export async function dbConnect(): Promise<void> {
